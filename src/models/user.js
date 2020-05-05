@@ -48,7 +48,10 @@ const userSchema = new mongoose.Schema({
             type:String,
             required:true
         }
-    }]
+    }],
+    avatar:{
+        type:Buffer
+    }
 }, {
     timestamps: true
 })
@@ -59,16 +62,18 @@ userSchema.virtual('tasks', {
     foreignField:'owner'
 })
 
-
+//This function ensures that things that I choose will not be displayed (like password, image, token)
 userSchema.methods.toJSON = function (){
     const user = this
     const userObject = user.toObject()
 
     delete userObject.password
     delete userObject.tokens
+    delete userObject.avatar
+
     return userObject
 }
-
+ 
 userSchema.methods.generarteAuthToken = async function(){
     const user = this
     const token = jwt.sign({_id: user._id.toString()},'thisismynewcourse' )
