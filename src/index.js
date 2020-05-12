@@ -4,7 +4,8 @@ const UserRouter = require ('./routers/user')
 const TaskRouter = require ('./routers/task')
 
 const app = express()
-const port = process.env.port || 3000
+const port = process.env.PORT
+console.log(port)
 
 // automaticly parse to an object 
 app.use(express.json())
